@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from "@angular/core";
 import { LoadingBarService } from "@ngx-loading-bar/core";
 import { Subscription } from "rxjs";
+import { tap } from "rxjs/operators";
 import { AuthService } from "../auth/auth.service";
 import { DataStorageService } from "../services/data-storage.service";
 
@@ -12,6 +13,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
     userSubscription: Subscription
     collapsed = true;
     isAuthenticated = false;
+    isRecipesPresent = true;
 
     constructor(
         private dataStorageService: DataStorageService,
@@ -23,15 +25,22 @@ export class HeaderComponent implements OnInit, OnDestroy{
     }
 
     onSaveData() {
-        this.loadingBarService.start();
+        this.loadingBarService.useRef().start();
         this.dataStorageService.storeRecipes()
             .subscribe(_ => this.loadingBarService.complete());
     }
 
     onFetchData() {
-        this.loadingBarService.start();
+        this.loadingBarService.useRef().start();
         this.dataStorageService.fetchRecipes()
-            .subscribe(_ => this.loadingBarService.complete());
+            .pipe(
+                tap((data) => this.isRecipesPresent = !!data)
+            )
+            .subscribe(_ => this.loadingBarService.useRef().stop());
+    }
+
+    onHandleError() {
+        this.isRecipesPresent = true;
     }
 
     onLogout() {
