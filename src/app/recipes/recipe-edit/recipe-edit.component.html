@@ -1,0 +1,92 @@
+<div class="row">
+    <div class="col-xs-12">
+        <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <button class="btn btn-success" type="submit" 
+                        style="margin-right: 10px;"
+                        [disabled]="!recipeForm.valid && recipeForm.touched">Save</button>
+                        <button class="btn btn-danger" type="button" (click)="onCancel()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" class="form-control" formControlName="recipeName">
+                        <div class="alert-danger" *ngIf="!recipeForm.get('recipeName').valid && recipeForm.get('recipeName').touched">
+                            <span *ngIf="recipeForm.get('recipeName').errors?.required">Recipe name is required</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="imgPath">Image URL</label>
+                        <input type="text" id="imgPath" class="form-control" formControlName="imageURL">
+                        <div class="alert-danger" *ngIf="!recipeForm.get('imageURL').valid && recipeForm.get('imageURL').touched">
+                            <span *ngIf="recipeForm.get('imageURL').errors?.required">Image is required</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <img 
+                        [src]="recipeForm.get('imageURL').value" 
+                        [alt]="recipeForm.get('recipeName').value === null ? '' : recipeForm.get('recipeName').value" 
+                        class="img-responsive">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" class="form-control" rows="6" formControlName="description"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <label for="ingredientName">Ingredient Name</label>
+                        </div>
+                        <div class="col-xs-2">
+                            <label for="ingredientName">Amount</label>
+                        </div>
+                        <div class="col-xs-2">
+                            <button type="button" class="btn btn-default" (click)="addIngredient(null, null)">+</button>
+                        </div>
+                    </div>
+                    <div class="row" formArrayName="ingredients" style="margin-top: 5px; margin-bottom: 5px;"
+                    *ngFor="let ingredient of ingredients; index as i">
+                        <ng-container [formGroup]="ingredient">
+                            <div class="col-xs-8">
+                                <input type="text" id="ingredientName" class="form-control" formControlName="ingredientName">
+                                <div class="alert-danger" *ngIf="!ingredient.get('ingredientName').valid && ingredient.get('ingredientName').touched">
+                                    <span *ngIf="ingredient.get('ingredientName').errors?.required">Required</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <input type="number" id="ingredientAmount" class="form-control" formControlName="ingredientAmount">
+                                <div class="alert-danger" *ngIf="!ingredient.get('ingredientAmount').valid && ingredient.get('ingredientAmount').touched">
+                                    <span *ngIf="ingredient.get('ingredientAmount').errors?.required">Required</span>
+                                    <span *ngIf="ingredient.get('ingredientAmount').errors?.pattern">Non-negative</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <button class="btn btn-danger" type="button" (click)="deleteIngredient(i)">X</button>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
