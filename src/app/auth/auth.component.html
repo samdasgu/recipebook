@@ -1,8 +1,5 @@
 <div class="row">
     <div class="col-xs-12 col-md-6 com-md-offset-3">
-        <!-- <div class="alert alert-danger" *ngIf="error">
-            {{ error }}
-        </div> -->
         <app-alert *ngIf="error" [message]="error" (close)="onHandleError()"></app-alert>
         <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
             <fieldset [disabled]="isSubmitted">

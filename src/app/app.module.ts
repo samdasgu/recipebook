@@ -14,38 +14,31 @@ import { RecipeListItemComponent } from './recipes/recipe-list/recipe-list-item/
 import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
 import { DropDownDirective } from './directives/dropdown.directive';
 import { AppRoutingModule } from './app.routes';
-import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
-import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { StoreModule } from '@ngrx/store';
 import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptor } from './auth/auth-interceptor.service';
 import { AlertComponent } from './shared/alert/alert.component';
+import { RecipesModule } from './recipes/recipes.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    RecipesComponent,
     ShoppingListComponent,
-    RecipeDetailComponent,
-    RecipeListComponent,
-    RecipeListItemComponent,
     ShoppingEditComponent,
     DropDownDirective,
-    RecipeStartComponent,
-    RecipeEditComponent,
     AuthComponent,
     AlertComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
     LoadingBarRouterModule,
     AppRoutingModule,
+    RecipesModule,
     StoreModule.forRoot({shoppingList: shoppingListReducer})
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
