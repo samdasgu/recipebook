@@ -6,12 +6,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app.routes';
-import { ANIMATION_TYPES, LoadingModule } from 'ngx-loading';
 import { AuthInterceptor } from './auth/auth-interceptor.service';
-import { RecipesModule } from './recipes/recipes.module';
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { SharedModule } from './shared/shared.module';
-import { AuthModule } from './auth/auth.module';
+import { StoreModule } from '@ngrx/store';
+import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
 
 @NgModule({
   declarations: [
@@ -21,19 +19,9 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     BrowserModule,
     HttpClientModule,
-    LoadingModule.forRoot({
-      animationType: ANIMATION_TYPES.circleSwish,
-      backdropBackgroundColour: 'rgba(0,0,0,0.3)',
-      backdropBorderRadius: '0px',
-      primaryColour: '#ffffff',
-      secondaryColour: '#ffffff',
-      tertiaryColour: '#ffffff'
-    }),
     AppRoutingModule,
-    RecipesModule,
-    ShoppingListModule,
-    AuthModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forRoot({shoppingList: shoppingListReducer})
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
