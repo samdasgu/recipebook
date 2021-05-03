@@ -27,7 +27,6 @@ export class AuthComponent {
         if(!form.valid) {
             return;
         }
-        // this.loadingService.useRef().start();
         this.isLoading = true;
         this.isSubmitted = true;
         const email = form.value.email;
@@ -45,13 +44,11 @@ export class AuthComponent {
                 this.isSubmitted = false;
                 this.router.navigate(['/recipes']);
                 this.isLoading = false;
-                // this.loadingService.useRef().stop();
             },
             errorMessage => {
                 this.error = errorMessage;
                 this.isSubmitted = false;
                 this.isLoading = false;
-                // this.loadingService.useRef().stop();
             }
         );
         form.reset();
