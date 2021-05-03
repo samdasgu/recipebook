@@ -4,7 +4,6 @@ import { Recipe } from "../model/recipe.model";
 import { RecipeService } from "./recipe.service";
 
 import { map, tap } from 'rxjs/operators';
-import { LoadingBarService } from "@ngx-loading-bar/core";
 
 @Injectable({ providedIn: 'root' })
 export class DataStorageService {

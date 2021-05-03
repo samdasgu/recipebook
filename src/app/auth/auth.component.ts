@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
-import { LoadingBarService } from "@ngx-loading-bar/core";
 import { Observable } from "rxjs";
 import { AuthResponse, AuthService } from "./auth.service";
 
@@ -13,9 +12,9 @@ export class AuthComponent {
     isLoginMode = true;
     error: string = null;
     isSubmitted = false;
+    isLoading = false;
 
     constructor(
-        private loadingService: LoadingBarService,
         private authService: AuthService,
         private router: Router
     ) {}
@@ -28,7 +27,8 @@ export class AuthComponent {
         if(!form.valid) {
             return;
         }
-        this.loadingService.useRef().start();
+        // this.loadingService.useRef().start();
+        this.isLoading = true;
         this.isSubmitted = true;
         const email = form.value.email;
         const password = form.value.password;
@@ -44,12 +44,14 @@ export class AuthComponent {
             resData => {
                 this.isSubmitted = false;
                 this.router.navigate(['/recipes']);
-                this.loadingService.useRef().stop();
+                this.isLoading = false;
+                // this.loadingService.useRef().stop();
             },
             errorMessage => {
                 this.error = errorMessage;
                 this.isSubmitted = false;
-                this.loadingService.useRef().stop();
+                this.isLoading = false;
+                // this.loadingService.useRef().stop();
             }
         );
         form.reset();

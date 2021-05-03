@@ -1,7 +1,8 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
-import { DropDownDirective } from "../directives/dropdown.directive";
+import { DropDownDirective } from "../shared/directives/dropdown.directive";
+import { SharedModule } from "../shared/shared.module";
 import { RecipeDetailComponent } from "./recipe-detail/recipe-detail.component";
 import { RecipeEditComponent } from "./recipe-edit/recipe-edit.component";
 import { RecipeListItemComponent } from "./recipe-list/recipe-list-item/recipe-list-item.component";
@@ -20,9 +21,9 @@ import { RecipesRoutes } from "./recipes.routes";
         RecipeEditComponent
     ],
     imports: [
-        CommonModule,
         RecipesRoutes,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        SharedModule
     ]
 })
 export class RecipesModule {

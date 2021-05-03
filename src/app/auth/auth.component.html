@@ -1,3 +1,4 @@
+<ngx-loading [show]="isLoading"></ngx-loading>
 <div class="row">
     <div class="col-xs-12 col-md-6 com-md-offset-3">
         <app-alert *ngIf="error" [message]="error" (close)="onHandleError()"></app-alert>
