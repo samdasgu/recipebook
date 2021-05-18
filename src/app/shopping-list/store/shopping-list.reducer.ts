@@ -38,10 +38,10 @@ export function shoppingListReducer(
             }
 
         case ShoppingListAction.EDIT_INGREDIENT:
-            const updatedIngredientIndex = action.payload.index;
+            const updatedIngredientIndex = state.ingredientToBeUpdatedIndex;
             const updatedIngredient: Ingredient = {
                 ...state.ingredients[updatedIngredientIndex],
-                ...action.payload.updatedIngredient
+                ...action.payload
             };
             const updatedIngredientList = [...state.ingredients];
             updatedIngredientList[updatedIngredientIndex] = updatedIngredient;
@@ -54,7 +54,7 @@ export function shoppingListReducer(
             return {
                 ...state,
                 ingredients: state.ingredients.filter((ing, ingIndex) => {
-                    return ingIndex !== action.payload
+                    return ingIndex !== state.ingredientToBeUpdatedIndex;
                 })
             }
 
